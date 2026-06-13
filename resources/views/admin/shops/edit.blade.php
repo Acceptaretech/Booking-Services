@@ -1,0 +1,111 @@
+@extends('layouts.admin.app')
+
+@section('title', 'Edit Shop')
+@section('page_title', 'Edit Shop')
+
+@section('content')
+
+<form method="POST" action="{{ route('admin.shops.update', $shop->id) }}" enctype="multipart/form-data" class="card p-6">
+    @csrf
+    @method('PUT')
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div>
+            <label class="form-label">Shop Name *</label>
+            <input name="name" value="{{ old('name', $shop->name) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Provider *</label>
+            <select name="user_id" class="form-select" required>
+                @foreach($providers as $provider)
+                    <option value="{{ $provider->id }}" {{ old('user_id', $shop->user_id) == $provider->id ? 'selected' : '' }}>
+                        {{ $provider->full_name ?? $provider->name ?? $provider->email }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label">Registration Number *</label>
+            <input name="registration_number" value="{{ old('registration_number', $shop->registration_number) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Email *</label>
+            <input type="email" name="email" value="{{ old('email', $shop->email) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Contact Number *</label>
+            <div class="flex">
+                <input name="country_code" value="{{ old('country_code', $shop->country_code ?? '+91') }}" class="form-input w-24 rounded-r-none">
+                <input name="phone" value="{{ old('phone', $shop->phone) }}" class="form-input rounded-l-none" required>
+            </div>
+        </div>
+
+        <div>
+            <label class="form-label">Latitude *</label>
+            <input name="latitude" value="{{ old('latitude', $shop->latitude) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Longitude *</label>
+            <input name="longitude" value="{{ old('longitude', $shop->longitude) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Address *</label>
+            <input name="address" value="{{ old('address', $shop->address) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Country *</label>
+            <input name="country" value="{{ old('country', $shop->country) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">State *</label>
+            <input name="state" value="{{ old('state', $shop->state) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">City *</label>
+            <input name="city" value="{{ old('city', $shop->city) }}" class="form-input" required>
+        </div>
+
+        <div>
+            <label class="form-label">Status *</label>
+            <select name="status" class="form-select" required>
+                <option value="active" {{ $shop->status === 'active' ? 'selected' : '' }}>Active</option>
+                <option value="inactive" {{ $shop->status === 'inactive' ? 'selected' : '' }}>Inactive</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-input">
+            @if($shop->image)
+                <img src="{{ asset('storage/'.$shop->image) }}" class="w-16 h-16 rounded-xl object-cover mt-2">
+            @endif
+        </div>
+
+        <div>
+            <label class="form-label">Languages</label>
+            <select name="languages[]" multiple class="form-select">
+                @foreach(['en'=>'English','hi'=>'Hindi','gu'=>'Gujarati'] as $key => $label)
+                    <option value="{{ $key }}" {{ in_array($key, old('languages', $shop->languages ?? [])) ? 'selected' : '' }}>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="flex justify-end gap-2 mt-6">
+        <a href="{{ route('admin.shops.index') }}" class="btn-secondary">Cancel</a>
+        <button type="submit" class="btn-primary">Update</button>
+    </div>
+</form>
+
+@endsection
