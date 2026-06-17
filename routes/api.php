@@ -15,6 +15,11 @@ use App\Http\Controllers\Api\Customer\CustomerWalletApiController;
 
 
 
+// Providers
+use App\Http\Controllers\Api\Provider\ProviderAuthApiController;
+
+
+
 
 Route::prefix('v1')->group(function () {
 
@@ -58,6 +63,16 @@ Route::prefix('v1')->group(function () {
             Route::post('/addresses/{addressId}/default', [CustomerAddressApiController::class, 'makeDefault']);
             Route::get('/wallet', [CustomerWalletApiController::class, 'index']);
             Route::post('/wallet/add-balance', [CustomerWalletApiController::class, 'addBalance']);
+        });
+    });
+
+    Route::prefix('provider')->group(function () {
+        Route::post('/register', [ProviderAuthApiController::class, 'register']);
+        Route::post('/login', [ProviderAuthApiController::class, 'login']);
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/profile', [ProviderAuthApiController::class, 'profile']);
+            Route::post('/logout', [ProviderAuthApiController::class, 'logout']);
         });
     });
 

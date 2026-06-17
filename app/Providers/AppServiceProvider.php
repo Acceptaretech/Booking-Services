@@ -20,6 +20,9 @@ use App\Services\Interfaces\CustomerAddressServiceInterface;
 use App\Services\Customer\CustomerAddressService;
 use App\Services\Interfaces\CustomerWalletServiceInterface;
 use App\Services\Customer\CustomerWalletService;
+// Providers
+use App\Services\Interfaces\ProviderAuthServiceInterface;
+use App\Services\Provider\ProviderAuthService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,6 +59,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CustomerWalletServiceInterface::class,
             CustomerWalletService::class
+        );
+        $this->app->bind(
+            ProviderAuthServiceInterface::class,
+            ProviderAuthService::class
         );
     }
 

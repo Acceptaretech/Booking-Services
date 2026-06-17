@@ -1,71 +1,65 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-// Auth
-use App\Http\Controllers\Auth\AuthController;
-
-// Public
-use App\Http\Controllers\Public\HomeController;
-use App\Http\Controllers\Public\PageController as PublicPage;
-
-// Customer
-use App\Http\Controllers\Customer\DashboardController as CustomerDashboard;
-use App\Http\Controllers\Customer\BookingController as CustomerBooking;
-use App\Http\Controllers\Customer\ProfileController as CustomerProfile;
-use App\Http\Controllers\Customer\AddressController;
-use App\Http\Controllers\Customer\WalletController;
-
-
-// Provider
-use App\Http\Controllers\Provider\DashboardController as ProviderDashboard;
-use App\Http\Controllers\Provider\BookingController as ProviderBooking;
-use App\Http\Controllers\Provider\ServiceController as ProviderService;
-use App\Http\Controllers\Provider\ShopController as ProviderShop;
-use App\Http\Controllers\Provider\PackageController as ProviderPackage;
-use App\Http\Controllers\Provider\AddonController as ProviderAddon;
-use App\Http\Controllers\Provider\HandymanController as ProviderHandyman;
-use App\Http\Controllers\Provider\HandymanCommissionController as ProviderCommission;
-use App\Http\Controllers\Provider\JobRequestController as ProviderJob;
-use App\Http\Controllers\Provider\PaymentController as ProviderPayment;
-use App\Http\Controllers\Provider\WithdrawalController as ProviderWithdrawal;
-use App\Http\Controllers\Provider\RatingController as ProviderRating;
-use App\Http\Controllers\Provider\PromotionalBannerController as ProviderBanner;
-use App\Http\Controllers\Provider\HelpDeskController as ProviderHelpDesk;
-use App\Http\Controllers\Provider\ProfileController as ProviderProfile;
-
-// Admin
-use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
-use App\Http\Controllers\Admin\BookingController as AdminBooking;
-use App\Http\Controllers\Admin\CategoryController as AdminCategory;
-use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategory;
-use App\Http\Controllers\Admin\ServiceController as AdminService;
-use App\Http\Controllers\Admin\UserController as AdminUser;
-use App\Http\Controllers\Admin\PaymentController as AdminPayment;
-use App\Http\Controllers\Admin\ProviderEarningController;
-use App\Http\Controllers\Admin\WithdrawalController;
-// use App\Http\Controllers\Admin\WalletController;
-use App\Http\Controllers\Admin\CouponController as AdminCoupon;
-use App\Http\Controllers\Admin\BlogController as AdminBlog;
-use App\Http\Controllers\Admin\ZoneController as AdminZone;
-use App\Http\Controllers\Admin\TaxController as AdminTax;
-use App\Http\Controllers\Admin\JobController as AdminJob;
-use App\Http\Controllers\Admin\BannerController as AdminBanner;
-use App\Http\Controllers\Admin\ReportController as AdminReport;
-use App\Http\Controllers\Admin\SettingsController as AdminSettings;
-use App\Http\Controllers\Admin\HelpDeskController as AdminHelpDesk;
-use App\Http\Controllers\Admin\RatingController as AdminRating;
-use App\Http\Controllers\Admin\PackageController as AdminPackage;
 use App\Http\Controllers\Admin\AddonController as AdminAddon;
-use App\Http\Controllers\Admin\ShopController as AdminShop;
-use App\Http\Controllers\Admin\ProviderCommissionController;
+use App\Http\Controllers\Admin\BannerController as AdminBanner;
+// Public
+
+use App\Http\Controllers\Admin\BlogController as AdminBlog;
+use App\Http\Controllers\Admin\BookingController as AdminBooking;
+// Customer
+use App\Http\Controllers\Admin\CategoryController as AdminCategory;
+use App\Http\Controllers\Admin\CouponController as AdminCoupon;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\DocumentController;
+use App\Http\Controllers\Admin\HandymanCommissionController;
+// Provider
 use App\Http\Controllers\Admin\HandymanController;
 use App\Http\Controllers\Admin\HandymanRequestController;
-use App\Http\Controllers\Admin\HandymanCommissionController;
+use App\Http\Controllers\Admin\HelpDeskController as AdminHelpDesk;
+use App\Http\Controllers\Admin\JobController as AdminJob;
+use App\Http\Controllers\Admin\PackageController as AdminPackage;
 use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\DocumentController;
-use App\Models\SubCategory;
+use App\Http\Controllers\Admin\PaymentController as AdminPayment;
+use App\Http\Controllers\Admin\ProviderCommissionController;
+use App\Http\Controllers\Admin\ProviderEarningController;
+use App\Http\Controllers\Admin\RatingController as AdminRating;
+use App\Http\Controllers\Admin\ReportController as AdminReport;
+use App\Http\Controllers\Admin\ServiceController as AdminService;
+use App\Http\Controllers\Admin\SettingsController as AdminSettings;
+use App\Http\Controllers\Admin\ShopController as AdminShop;
+use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategory;
+// Admin
+use App\Http\Controllers\Admin\TaxController as AdminTax;
+use App\Http\Controllers\Admin\UserController as AdminUser;
+use App\Http\Controllers\Admin\WithdrawalController;
+use App\Http\Controllers\Admin\ZoneController as AdminZone;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Customer\BookingController as CustomerBooking;
+use App\Http\Controllers\Customer\DashboardController as CustomerDashboard;
+use App\Http\Controllers\Customer\ProfileController as CustomerProfile;
+use App\Http\Controllers\Customer\WalletController;
+use App\Http\Controllers\Provider\AddonController as ProviderAddon;
+use App\Http\Controllers\Provider\BookingController as ProviderBooking;
+use App\Http\Controllers\Provider\DashboardController as ProviderDashboard;
+use App\Http\Controllers\Provider\HandymanCommissionController as ProviderCommission;
+use App\Http\Controllers\Provider\HandymanController as ProviderHandyman;
+use App\Http\Controllers\Provider\HelpDeskController as ProviderHelpDesk;
+use App\Http\Controllers\Provider\JobRequestController as ProviderJobRequest;
+use App\Http\Controllers\Provider\PackageController as ProviderPackage;
+use App\Http\Controllers\Provider\PaymentController as ProviderPayment;
+use App\Http\Controllers\Provider\ProfileController as ProviderProfile;
+use App\Http\Controllers\Provider\PromotionalBannerController as ProviderBanner;
+use App\Http\Controllers\Provider\RatingController as ProviderRating;
+use App\Http\Controllers\Provider\ServiceController as ProviderService;
+use App\Http\Controllers\Provider\ShopController as ProviderShop;
+use App\Http\Controllers\Provider\WithdrawalController as ProviderWithdrawal;
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\PageController as PublicPage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
+// use App\Http\Controllers\Admin\WalletController;
 
 // PUBLIC
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -115,8 +109,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.email');
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-Route::post('/settings/theme', function (\Illuminate\Http\Request $r) {
+Route::post('/settings/theme', function (Request $r) {
     session(['theme' => $r->theme]);
+
     return response()->json(['ok' => true]);
 })->middleware('auth');
 
@@ -142,15 +137,17 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 });
 
 // PROVIDER
-Route::middleware(['auth', 'role:provider,handyman'])->prefix('provider')->name('provider.')->group(function () {
+Route::middleware(['auth', 'role:provider'])->prefix('provider')->name('provider.')->group(function () {
     Route::get('/dashboard', [ProviderDashboard::class, 'index'])->name('dashboard');
 
     Route::get('/bookings', [ProviderBooking::class, 'index'])->name('bookings.index');
-    Route::get('/bookings/{booking}', [ProviderBooking::class, 'show'])->name('bookings.show');
+    Route::delete('/bookings/{booking}', [ProviderBooking::class, 'destroy'])->name('bookings.destroy');
+    Route::get('/bookings/export', [ProviderBooking::class, 'export'])->name('bookings.export');
     Route::patch('/bookings/{booking}/status', [ProviderBooking::class, 'updateStatus'])->name('bookings.status');
     Route::patch('/bookings/{booking}/handyman', [ProviderBooking::class, 'assignHandyman'])->name('bookings.assign');
     Route::delete('/bookings/{booking}', [ProviderBooking::class, 'destroy'])->name('bookings.destroy');
 
+    // Services
     Route::get('/services', [ProviderService::class, 'index'])->name('services.index');
     Route::get('/services/create', [ProviderService::class, 'create'])->name('services.create');
     Route::post('/services', [ProviderService::class, 'store'])->name('services.store');
@@ -158,17 +155,30 @@ Route::middleware(['auth', 'role:provider,handyman'])->prefix('provider')->name(
     Route::put('/services/{service}', [ProviderService::class, 'update'])->name('services.update');
     Route::delete('/services/{service}', [ProviderService::class, 'destroy'])->name('services.destroy');
     Route::patch('/services/{service}/toggle', [ProviderService::class, 'toggleStatus'])->name('services.toggle');
+
     Route::get('/services/{service}/faqs', [ProviderService::class, 'faqs'])->name('services.faqs');
     Route::post('/services/{service}/faqs', [ProviderService::class, 'storeFaq'])->name('services.faqs.store');
+
     Route::get('/service-request-list', [ProviderService::class, 'requestList'])->name('services.requests');
+
+    // ADD THESE TWO ROUTES
+    Route::post('/services/bulk-action', [ProviderService::class, 'bulkAction'])
+        ->name('services.bulk-action');
+
+    Route::get('/services/{service}', [ProviderService::class, 'show'])
+        ->name('services.show');
+    Route::get('/get-subcategories/{category}', [ProviderService::class, 'getSubCategories'])
+        ->name('services.get-subcategories');
 
     Route::get('/shops', [ProviderShop::class, 'index'])->name('shops.index');
     Route::get('/shops/create', [ProviderShop::class, 'create'])->name('shops.create');
     Route::post('/shops', [ProviderShop::class, 'store'])->name('shops.store');
+    Route::get('/shops/{shop}', [ProviderShop::class, 'show'])->name('shops.show');
     Route::get('/shops/{shop}/edit', [ProviderShop::class, 'edit'])->name('shops.edit');
     Route::put('/shops/{shop}', [ProviderShop::class, 'update'])->name('shops.update');
     Route::delete('/shops/{shop}', [ProviderShop::class, 'destroy'])->name('shops.destroy');
     Route::patch('/shops/{shop}/toggle', [ProviderShop::class, 'toggleStatus'])->name('shops.toggle');
+    Route::post('/shops/bulk-action', [ProviderShop::class, 'bulkAction'])->name('shops.bulk-action');
 
     Route::get('/packages', [ProviderPackage::class, 'index'])->name('packages.index');
     Route::get('/packages/create', [ProviderPackage::class, 'create'])->name('packages.create');
@@ -176,6 +186,8 @@ Route::middleware(['auth', 'role:provider,handyman'])->prefix('provider')->name(
     Route::get('/packages/{package}/edit', [ProviderPackage::class, 'edit'])->name('packages.edit');
     Route::put('/packages/{package}', [ProviderPackage::class, 'update'])->name('packages.update');
     Route::delete('/packages/{package}', [ProviderPackage::class, 'destroy'])->name('packages.destroy');
+    Route::patch('/packages/{package}/toggle', [ProviderPackage::class, 'toggleStatus'])->name('packages.toggle');
+    Route::post('/packages/bulk-action', [ProviderPackage::class, 'bulkAction'])->name('packages.bulk-action');
 
     Route::get('/addons', [ProviderAddon::class, 'index'])->name('addons.index');
     Route::get('/addons/create', [ProviderAddon::class, 'create'])->name('addons.create');
@@ -183,28 +195,29 @@ Route::middleware(['auth', 'role:provider,handyman'])->prefix('provider')->name(
     Route::get('/addons/{addon}/edit', [ProviderAddon::class, 'edit'])->name('addons.edit');
     Route::put('/addons/{addon}', [ProviderAddon::class, 'update'])->name('addons.update');
     Route::delete('/addons/{addon}', [ProviderAddon::class, 'destroy'])->name('addons.destroy');
+    Route::patch('/addons/{addon}/toggle', [ProviderAddon::class, 'toggleStatus'])->name('addons.toggle');
+    Route::post('/addons/bulk-action', [ProviderAddon::class, 'bulkAction'])->name('addons.bulk-action');
 
-    Route::middleware('role:provider')->group(function () {
-        Route::get('/handymen', [ProviderHandyman::class, 'index'])->name('handymen.index');
-        Route::get('/handymen/create', [ProviderHandyman::class, 'create'])->name('handymen.create');
-        Route::post('/handymen', [ProviderHandyman::class, 'store'])->name('handymen.store');
-        Route::get('/handymen/{user}/edit', [ProviderHandyman::class, 'edit'])->name('handymen.edit');
-        Route::put('/handymen/{user}', [ProviderHandyman::class, 'update'])->name('handymen.update');
-        Route::delete('/handymen/{user}', [ProviderHandyman::class, 'destroy'])->name('handymen.destroy');
-        Route::get('/handymen/requests', [ProviderHandyman::class, 'requests'])->name('handymen.requests');
-        Route::get('/handymen/unassigned', [ProviderHandyman::class, 'unassigned'])->name('handymen.unassigned');
+    Route::get('/job-requests', [ProviderJobRequest::class, 'index'])->name('job-requests.index');
+    Route::get('/job-requests/{jobRequest}', [ProviderJobRequest::class, 'show'])->name('job-requests.show');
+    Route::delete('/job-requests/{jobRequest}', [ProviderJobRequest::class, 'destroy'])->name('job-requests.destroy');
+    Route::post('/job-requests/bulk-action', [ProviderJobRequest::class, 'bulkAction'])->name('job-requests.bulk-action');
 
-        Route::get('/handyman-commissions', [ProviderCommission::class, 'index'])->name('handyman-commissions.index');
-        Route::get('/handyman-commissions/create', [ProviderCommission::class, 'create'])->name('handyman-commissions.create');
-        Route::post('/handyman-commissions', [ProviderCommission::class, 'store'])->name('handyman-commissions.store');
-        Route::get('/handyman-commissions/{hc}/edit', [ProviderCommission::class, 'edit'])->name('handyman-commissions.edit');
-        Route::put('/handyman-commissions/{hc}', [ProviderCommission::class, 'update'])->name('handyman-commissions.update');
-        Route::delete('/handyman-commissions/{hc}', [ProviderCommission::class, 'destroy'])->name('handyman-commissions.destroy');
-
-        Route::get('/job-requests', [ProviderJob::class, 'index'])->name('job-requests.index');
-        Route::get('/job-requests/{jobRequest}', [ProviderJob::class, 'show'])->name('job-requests.show');
-        Route::post('/job-requests/{job}/bid', [ProviderJob::class, 'placeBid'])->name('job-requests.bid');
-    });
+    Route::get('/handymen', [ProviderHandyman::class, 'index'])->name('handymen.index');
+    Route::get('/handymen/create', [ProviderHandyman::class, 'create'])->name('handymen.create');
+    Route::post('/handymen', [ProviderHandyman::class, 'store'])->name('handymen.store');
+    Route::get('/handymen/{user}/edit', [ProviderHandyman::class, 'edit'])->name('handymen.edit');
+    Route::put('/handymen/{user}', [ProviderHandyman::class, 'update'])->name('handymen.update');
+    Route::delete('/handymen/{user}', [ProviderHandyman::class, 'destroy'])->name('handymen.destroy');
+    Route::get('/handymen/requests', [ProviderHandyman::class, 'requests'])->name('handymen.requests');
+    Route::get('/handymen/unassigned', [ProviderHandyman::class, 'unassigned'])->name('handymen.unassigned');
+    Route::post('/handymen/bulk-action', [ProviderHandyman::class, 'bulkAction'])->name('handymen.bulk-action');
+    Route::get('/handyman-commissions', [ProviderCommission::class, 'index'])->name('handyman-commissions.index');
+    Route::get('/handyman-commissions/create', [ProviderCommission::class, 'create'])->name('handyman-commissions.create');
+    Route::post('/handyman-commissions', [ProviderCommission::class, 'store'])->name('handyman-commissions.store');
+    Route::get('/handyman-commissions/{hc}/edit', [ProviderCommission::class, 'edit'])->name('handyman-commissions.edit');
+    Route::put('/handyman-commissions/{hc}', [ProviderCommission::class, 'update'])->name('handyman-commissions.update');
+    Route::delete('/handyman-commissions/{hc}', [ProviderCommission::class, 'destroy'])->name('handyman-commissions.destroy');
 
     Route::get('/payments', [ProviderPayment::class, 'index'])->name('payments.index');
     Route::get('/cash-payments', [ProviderPayment::class, 'cash'])->name('payments.cash');
@@ -260,7 +273,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/sub-categories/{subCategory}/edit', [AdminSubCategory::class, 'edit'])->name('sub-categories.edit');
     Route::put('/sub-categories/{subCategory}', [AdminSubCategory::class, 'update'])->name('sub-categories.update');
     Route::delete('/sub-categories/{subCategory}', [AdminSubCategory::class, 'destroy'])->name('sub-categories.destroy');
-    
+
     Route::get('/services', [AdminService::class, 'index'])->name('services.index');
     Route::get('/services/create', [AdminService::class, 'create'])->name('services.create');
     Route::post('/services', [AdminService::class, 'store'])->name('services.store');
@@ -276,26 +289,22 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/services/get-zones-by-provider/{provider}', [AdminService::class, 'getZonesByProvider'])
         ->name('services.getZonesByProvider');
 
-
-        // PACKAGES
+    // PACKAGES
     Route::get('/packages', function () {
         return view('admin.packages.index');
     })->name('packages.index');
 
     Route::resource('packages', AdminPackage::class);
-    // SERVICE REQUESTS
-    Route::get('/service-requests', function () {
-        return view('admin.service-requests.index');
-    })->name('service-requests.index');
-
+    // // SERVICE REQUESTS
+    // Route::get('/service-requests', function () {
+    //     return view('admin.service-requests.index');
+    // })->name('service-requests.index');
 
     Route::resource('addons', AdminAddon::class);
     Route::resource('shops', AdminShop::class);
 
-
-
     Route::get('/providers', [AdminUser::class, 'providers'])
-    ->name('providers.index');
+        ->name('providers.index');
 
     Route::get('/provider-requests', [AdminUser::class, 'providerRequests'])
         ->name('providers.requests');
@@ -340,7 +349,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Handymen
     Route::get('/handymen', [HandymanController::class, 'index'])
-    ->name('handymen.index');
+        ->name('handymen.index');
 
     Route::get('/handymen/create', [HandymanController::class, 'create'])
         ->name('handymen.create');
@@ -362,7 +371,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // HanyMan Request
     Route::get('/handyman-requests', [HandymanRequestController::class, 'index'])
-    ->name('handymen.requests');
+        ->name('handymen.requests');
 
     Route::patch('/handyman-requests/{user}/accept', [HandymanRequestController::class, 'accept'])
         ->name('handymen.requests.accept');
@@ -375,7 +384,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Handyman Commission Route
     Route::get('/handyman-commissions', [HandymanCommissionController::class, 'index'])
-    ->name('handyman-commissions.index');
+        ->name('handyman-commissions.index');
 
     Route::patch('/handyman-commissions/{commission}/toggle', [HandymanCommissionController::class, 'toggle'])
         ->name('handyman-commissions.toggle');
@@ -388,35 +397,33 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // User
     Route::get('/users', [AdminUser::class, 'allUsers'])
-    ->name('users.index');
+        ->name('users.index');
     Route::get('/users/{user}/edit', [AdminUser::class, 'editUser'])
-    ->name('users.edit');
+        ->name('users.edit');
     Route::put('/users/{user}', [AdminUser::class, 'updateUser'])
-    ->name('users.update');
+        ->name('users.update');
     Route::patch('/users/{user}/toggle', [AdminUser::class, 'toggleStatus'])->name('users.toggle');
     Route::delete('/users/{user}', [AdminUser::class, 'destroy'])->name('users.destroy');
     Route::get('/unverified-users', [AdminUser::class, 'unverifiedUsers'])
-    ->name('unverified-users.index');
+        ->name('unverified-users.index');
     Route::patch('/unverified-users/{user}/verify', [AdminUser::class, 'verifyUser'])
-    ->name('unverified-users.verify');
+        ->name('unverified-users.verify');
 
     Route::get('/payments', [AdminPayment::class, 'index'])
-    ->name('payments.index');
+        ->name('payments.index');
 
     Route::get('/payments/cash', [AdminPayment::class, 'cashPayments'])
         ->name('payments.cash');
 
     Route::get('/payments/{payment}', [AdminPayment::class, 'show'])
-    ->name('payments.show');
-
+        ->name('payments.show');
 
     Route::get('/provider-earnings', [ProviderEarningController::class, 'index'])
-    ->name('provider-earnings.index');
+        ->name('provider-earnings.index');
 
     Route::get('/provider-earnings/{provider}', [ProviderEarningController::class, 'show'])
-    ->name('provider-earnings.show');
+        ->name('provider-earnings.show');
 
-    
     Route::get('/withdrawals', [WithdrawalController::class, 'index'])
         ->name('withdrawals.index');
 
@@ -431,7 +438,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Route::get('/withdrawal-requests', [AdminPayment::class, 'withdrawals'])->name('withdrawals.index');
     // Route::patch('/withdrawal-requests/{wr}/approve', [AdminPayment::class, 'approveWithdrawal'])->name('withdrawals.approve');
-    
+
     Route::get('/wallet', [WalletController::class, 'index'])
         ->name('wallet.index');
 
@@ -457,12 +464,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::patch(
         'blogs/{blog}/toggle-status',
-        [AdminBlog::class,'toggleStatus']
+        [AdminBlog::class, 'toggleStatus']
     )->name('blogs.toggle');
 
     Route::post(
         'blogs/bulk-action',
-        [AdminBlog::class,'bulkAction']
+        [AdminBlog::class, 'bulkAction']
     )->name('blogs.bulk');
 
     Route::get('pages/{slug}', [PageController::class, 'edit'])->name('pages.edit');
@@ -472,7 +479,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('documents/{document}/toggle-required', [DocumentController::class, 'toggleRequired'])->name('documents.toggleRequired');
     Route::patch('documents/{document}/toggle-status', [DocumentController::class, 'toggleStatus'])->name('documents.toggleStatus');
 
-    
     Route::get('/zones', [AdminZone::class, 'index'])->name('zones.index');
     Route::get('/zones/create', [AdminZone::class, 'create'])->name('zones.create');
     Route::post('/zones', [AdminZone::class, 'store'])->name('zones.store');
@@ -523,9 +529,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::get('/language', [AdminSettings::class, 'language'])->name('language');
         Route::get('/banner', [AdminSettings::class, 'banner'])->name('banner');
         Route::get('/seo', [AdminSettings::class, 'seo'])->name('seo');
-    
+
         Route::post('/update', [AdminSettings::class, 'update'])->name('update');
-    
+
         Route::post('/tax', [AdminSettings::class, 'storeTax'])->name('tax');
         Route::post('/zone', [AdminSettings::class, 'storeZone'])->name('zone');
     });
