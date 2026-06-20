@@ -637,7 +637,7 @@
 
                     <span class="flex items-center gap-3">
                         <i class="fas fa-hard-hat sb-icon"></i>
-                        <span class="sb-label">Handyman</span>
+                        <span class="sb-label">Technician</span>
                     </span>
 
                     <i id="handyman-arrow" class="fas fa-chevron-down text-xs sb-arrow transition-transform {{ $handymanMenuOpen ? 'rotate-180' : '' }}"></i>
@@ -647,24 +647,24 @@
                     <a href="{{ route('admin.handymen.index') }}"
                     class="sb-link {{ request()->routeIs('admin.handymen.index') ? 'active' : '' }}">
                         <i class="fas fa-list sb-icon"></i>
-                        <span class="sb-label">Handyman List</span>
+                        <span class="sb-label">Technician List</span>
                     </a>
 
                     <a href="{{ route('admin.handymen.requests') }}"
                     class="sb-link {{ request()->routeIs('admin.handymen.requests') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list sb-icon"></i>
-                        <span class="sb-label">Handyman Request List</span>
+                        <span class="sb-label">Technician Request List</span>
                     </a>
 
                     <a href="{{ route('admin.handymen.index') }}" class="sb-link">
                         <i class="fas fa-user-clock sb-icon"></i>
-                        <span class="sb-label">Unassigned Handyman</span>
+                        <span class="sb-label">Unassigned Technician</span>
                     </a>
 
                     <a href="{{ route('admin.handyman-commissions.index') }}"
                     class="sb-link {{ request()->routeIs('admin.handyman-commissions.*') ? 'active' : '' }}">
                         <i class="fas fa-hand-holding-usd sb-icon"></i>
-                        <span class="sb-label">Handyman Commission List</span>
+                        <span class="sb-label">Technician Commission List</span>
                     </a>
                 </div>
             </div>
@@ -871,7 +871,7 @@
 
         <div class="px-4 py-2 border-t border-white/5 flex-shrink-0">
             <p class="sb-section-label text-[10px] text-center text-gray-700">
-                © {{ date('Y') }} HandyMan. All Rights Reserved
+                © {{ date('Y') }} Technician. All Rights Reserved
             </p>
         </div>
     </aside>

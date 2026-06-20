@@ -542,7 +542,7 @@
                         onclick="toggleHandymanMenu()"
                         class="sb-link w-full {{ $handymanOpen ? 'active' : '' }}">
                     <i class="fas fa-user-cog sb-icon"></i>
-                    <span class="sb-label flex-1 text-left">Handyman</span>
+                    <span class="sb-label flex-1 text-left">Technician</span>
                     <i id="handymanArrow"
                        class="fas fa-chevron-down text-xs transition-transform {{ $handymanOpen ? 'rotate-180' : '' }}"></i>
                 </button>
@@ -553,25 +553,25 @@
                     <a href="{{ route('provider.handymen.index') }}"
                        class="sb-link {{ request()->routeIs('provider.handymen*') ? 'active' : '' }}">
                         <i class="fas fa-list sb-icon"></i>
-                        <span class="sb-label">Handyman List</span>
+                        <span class="sb-label">Technician List</span>
                     </a>
             
                     <a href="{{ route('provider.handymen.requests') }}"
                     class="sb-link {{ request()->routeIs('provider.handymen.requests') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list sb-icon"></i>
-                        <span class="sb-label">Handyman Request List</span>
+                        <span class="sb-label">Technician Request List</span>
                     </a>
 
                     <a href="{{ route('provider.handymen.unassigned') }}"
                     class="sb-link {{ request()->routeIs('provider.handymen.unassigned') ? 'active' : '' }}">
                         <i class="fas fa-user-clock sb-icon"></i>
-                        <span class="sb-label">Unassigned Handyman</span>
+                        <span class="sb-label">Unassigned Technician</span>
                     </a>
                                 
                     <a href="{{ route('provider.handyman-commissions.index') }}"
                        class="sb-link {{ request()->routeIs('provider.handyman-commissions*') ? 'active' : '' }}">
                         <i class="fas fa-user-tag sb-icon"></i>
-                        <span class="sb-label">Handyman Commission List</span>
+                        <span class="sb-label">Technician Commission List</span>
                     </a>
             
                 </div>
@@ -608,7 +608,7 @@
                class="sb-link {{ request()->routeIs('provider.payments.handyman') ? 'active' : '' }}"
                title="Handyman Earning List">
                 <i class="fas fa-coins sb-icon"></i>
-                <span class="sb-label">Handyman Earning List</span>
+                <span class="sb-label">Technician Earning List</span>
             </a>
 
             <div class="sb-section">
@@ -630,7 +630,7 @@
                class="sb-link {{ request()->routeIs('provider.ratings*') ? 'active' : '' }}"
                title="Handyman Rating List">
                 <i class="fas fa-star sb-icon"></i>
-                <span class="sb-label">Handyman Rating List</span>
+                <span class="sb-label">Technician Rating List</span>
             </a>
 
             <a href="{{ route('provider.help-desk.index') }}"
@@ -667,11 +667,11 @@
 
             <div class="flex items-center gap-1.5">
 
-                <button onclick="toggleDark()"
+              {{--  <button onclick="toggleDark()"
                         class="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-yellow-400">
                     <i class="fas fa-moon dark:hidden text-sm"></i>
                     <i class="fas fa-sun hidden dark:block text-sm"></i>
-                </button>
+                </button> --}}
 
                 <button class="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 relative">
                     <i class="fas fa-bell text-sm"></i>

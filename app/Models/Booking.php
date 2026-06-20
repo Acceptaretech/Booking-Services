@@ -33,7 +33,7 @@ class Booking extends Model
     public function package()   { return $this->belongsTo(Package::class); }
     public function statusLogs(){ return $this->hasMany(BookingStatusLog::class); }
     public function payment()   { return $this->hasOne(Payment::class); }
-    public function review()    { return $this->hasOne(Review::class); }
+    public function review()  {return $this->hasOne(Review::class, 'booking_id');}
 
     public function scopePending($q)   { return $q->where('status','pending'); }
     public function scopeCompleted($q) { return $q->where('status','completed'); }

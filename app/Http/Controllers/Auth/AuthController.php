@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\{User, UserDocument, Zone};
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, Hash, Storage};
 use Illuminate\Validation\Rules\Password;
@@ -19,34 +20,45 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
+            'email'      => 'required|email',
+            'password'   => 'required',
+            'login_role' => 'nullable|in:admin,provider,handyman,customer',
         ]);
-
+    
         $credentials = $request->only('email', 'password');
-        $remember    = $request->boolean('remember');
-
+        $remember = $request->boolean('remember');
+    
         if (!Auth::attempt($credentials, $remember)) {
             return back()->withErrors(['email' => 'Invalid credentials.'])->withInput();
         }
-
+    
         $user = Auth::user();
-
+    
         if (!$user->isActive()) {
             Auth::logout();
-            return back()->withErrors(['email' => 'Your account is not active. Please contact admin.'])->withInput();
+    
+            return back()
+                ->withErrors(['email' => 'Your account is not active. Please contact admin.'])
+                ->withInput();
         }
-
+    
+        if ($request->filled('login_role') && $request->login_role !== $user->role) {
+            Auth::logout();
+    
+            return back()
+                ->withErrors(['email' => 'You are trying to login from wrong panel.'])
+                ->withInput();
+        }
+    
         $request->session()->regenerate();
-
+    
         return match ($user->role) {
             'admin'    => redirect()->route('admin.dashboard'),
             'provider' => redirect()->route('provider.dashboard'),
-            'handyman' => redirect()->route('provider.dashboard'),
+            'handyman' => redirect()->route('handyman.dashboard'),
             default    => redirect()->route('customer.dashboard'),
         };
     }
-
     // ── Register (Customer) ────────────────────────────────────
     public function showRegister()
     {
@@ -77,11 +89,12 @@ class AuthController extends Controller
         return redirect()->route('customer.dashboard')->with('success', 'Welcome! Your account has been created.');
     }
 
-    // ── Register (Provider / Handyman) ────────────────────────
     public function showProviderRegister()
     {
         $zones = Zone::where('status', 'active')->get();
-        return view('auth.provider-register', compact('zones'));
+        $categories = Category::where('status', 'active')->get();
+
+        return view('auth.provider-register', compact('zones', 'categories'));
     }
 
     public function providerRegister(Request $request)
@@ -95,25 +108,27 @@ class AuthController extends Controller
             'password'         => ['required', 'confirmed', Password::min(8)],
             'user_type'        => 'required|in:provider,handyman',
             'zone_id'          => 'required|exists:zones,id',
-            'passport'         => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'provider_id'      => 'required_if:user_type,handyman|nullable|exists:users,id',
+            'category_id' => 'required_if:user_type,handyman|nullable|exists:categories,id',
+            'passport'         => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'driving_licence'  => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'terms'            => 'accepted',
         ]);
 
         $user = User::create([
-            'username'    => $request->username,
-            'first_name'  => $request->first_name,
-            'last_name'   => $request->last_name,
-            'email'       => $request->email,
-            'phone'       => $request->phone,
-            'country_code'=> $request->country_code ?? '+91',
-            'password'    => Hash::make($request->password),
-            'role'        => $request->user_type,
-            'designation' => $request->designation,
-            'zone_id'     => $request->zone_id,
-            'status'      => 'pending', // requires admin approval
+            'username'     => $request->username,
+            'first_name'   => $request->first_name,
+            'last_name'    => $request->last_name,
+            'email'        => $request->email,
+            'phone'        => $request->phone,
+            'country_code' => $request->country_code ?? '+91',
+            'password'     => Hash::make($request->password),
+            'role'         => $request->user_type,
+            'provider_id'  => $request->user_type === 'handyman' ? $request->provider_id : null,
+            'category_id' => $request->user_type === 'handyman' ? $request->category_id : null,
+            'designation'  => $request->designation,
+            'zone_id'      => $request->zone_id,
+            'status'       => 'pending',
         ]);
-
         // Handle documents
         $docs = ['voting_card','pan_card','passport','aadhar_card','driving_licence'];
         $docData = [];
@@ -129,6 +144,16 @@ class AuthController extends Controller
             ->with('success', 'Registration submitted. Your account is pending admin approval.');
     }
 
+    public function providersByZone($zoneId)
+    {
+        $providers = User::where('role', 'provider')
+            ->where('zone_id', $zoneId)
+            ->where('status', 'active')
+            ->select('id', 'first_name', 'last_name', 'email')
+            ->get();
+
+        return response()->json($providers);
+    }
     // ── Logout ─────────────────────────────────────────────────
     public function logout(Request $request)
     {

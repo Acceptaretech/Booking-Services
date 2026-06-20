@@ -1,5 +1,5 @@
 @extends('layouts.public.app')
-@section('title', 'Home - Your Instant Handyman Service')
+@section('title', 'Home - Your Instant Technician Service')
 
 @push('styles')
 <style>
@@ -25,10 +25,10 @@
         {{-- Text --}}
         <div class="text-white fade-in">
             <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                Your Instant Link To The <span class="text-yellow-300">Perfect Handyman</span> Service
+                Your Instant Link To The <span class="text-yellow-300">Perfect Technician</span> Service
             </h1>
             <p class="text-lg text-white/80 mb-8">
-                Experience the ease. Trust our handyman service, from fixes to installs. Count on us to meet your greatest household helper.
+                Experience the ease. Trust our Technician service, from fixes to installs. Count on us to meet your greatest household helper.
             </p>
 
             {{-- Search Bar --}}
@@ -66,15 +66,15 @@
                 <img src="{{ $provider->profile_image_url }}" class="w-full h-48 object-cover" alt="{{ $provider->full_name }}">
                 <div class="p-3 text-center">
                     <p class="font-semibold text-gray-800 text-sm">{{ $provider->full_name }}</p>
-                    <div class="flex justify-center mt-1">
+                    {{--<div class="flex justify-center mt-1">
                         @for($i=1;$i<=5;$i++)
                         <i class="fas fa-star text-yellow-400 text-xs"></i>
                         @endfor
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             @endforeach
-        </div>
+        </div> 
     </div>
 </section>
 
@@ -165,7 +165,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             @foreach([['fa-search','Search Service','Browse from hundreds of verified services in your area.'],
                       ['fa-calendar-check','Book Appointment','Select your date, time slot, and confirm your booking.'],
-                      ['fa-star','Get Service','Our expert handyman arrives and completes the job perfectly.']] as $i => $step)
+                      ['fa-star','Get Service','Our expert Technician arrives and completes the job perfectly.']] as $i => $step)
             <div class="relative">
                 @if(!$loop->last)
                 <div class="hidden md:block absolute top-10 left-2/3 w-1/2 border-t-2 border-dashed border-white/30"></div>

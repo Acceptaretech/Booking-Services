@@ -5,24 +5,24 @@
 
 @section('content')
 
-<div class="min-h-screen bg-slate-950 flex items-center justify-center p-4 py-12 relative overflow-hidden">
+<div class="min-h-screen bg-slate-950 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative overflow-hidden">
 
-    <div class="absolute w-72 h-72 bg-primary-600/40 rounded-full blur-3xl -top-20 -left-20"></div>
-    <div class="absolute w-96 h-96 bg-purple-600/30 rounded-full blur-3xl -bottom-32 -right-32"></div>
+    <div class="absolute w-56 h-56 sm:w-72 sm:h-72 bg-primary-600/40 rounded-full blur-3xl -top-20 -left-20"></div>
+    <div class="absolute w-72 h-72 sm:w-96 sm:h-96 bg-purple-600/30 rounded-full blur-3xl -bottom-32 -right-32"></div>
 
-    <div class="w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl relative z-10">
+    <div class="w-full max-w-md sm:max-w-xl lg:max-w-2xl bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl relative z-10">
 
-        <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <i class="fas fa-user-plus text-white text-2xl"></i>
+        <div class="text-center mb-6 sm:mb-8">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <i class="fas fa-user-plus text-white text-xl sm:text-2xl"></i>
             </div>
 
-            <h1 class="text-3xl font-bold text-white">Create Account</h1>
-            <p class="text-slate-400 text-sm mt-2">Join us and start booking trusted services</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-white">Create Account</h1>
+            <p class="text-slate-400 text-xs sm:text-sm mt-2">Join us and start booking trusted services</p>
         </div>
 
         @if($errors->any())
-            <div class="bg-red-500/15 border border-red-400/40 text-red-200 px-4 py-3 rounded-xl mb-5 text-sm">
+            <div class="bg-red-500/15 border border-red-400/40 text-red-200 px-4 py-3 rounded-xl mb-5 text-xs sm:text-sm">
                 <i class="fas fa-circle-exclamation mr-2"></i>
                 {{ $errors->first() }}
             </div>
@@ -53,8 +53,8 @@
 
                 <div class="md:col-span-2">
                     <label class="block text-slate-200 text-sm font-medium mb-2">Contact Number</label>
-                    <div class="flex gap-2">
-                        <span class="bg-white/10 border border-white/10 text-white rounded-xl px-4 py-3 text-sm flex items-center gap-2">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <span class="bg-white/10 border border-white/10 text-white rounded-xl px-4 py-3 text-sm flex items-center justify-center sm:justify-start gap-2">
                             🇮🇳 +91
                         </span>
 
@@ -90,7 +90,7 @@
 
             <p class="text-center mt-2">
                 <a href="{{ route('provider.register') }}" class="text-slate-500 text-xs hover:text-primary-300">
-                    Register as Provider or Handyman
+                    Register as Provider or Technician
                 </a>
             </p>
         </form>

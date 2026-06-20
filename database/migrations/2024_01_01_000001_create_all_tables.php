@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('country_code')->default('+91');
             $table->string('password');
             $table->enum('role', ['admin', 'customer', 'provider', 'handyman'])->default('customer');
+          
             $table->string('designation')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('address')->nullable();

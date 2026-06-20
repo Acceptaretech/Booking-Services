@@ -1,14 +1,14 @@
 @extends('layouts.provider.app')
 
-@section('title','Handyman List')
-@section('page_title','Handyman List')
+@section('title','Technician List')
+@section('page_title','Technician List')
 
 @section('content')
 
 <div class="card p-5 mb-6">
     <div class="flex justify-between items-center">
         <h2 class="text-lg font-bold text-gray-900 dark:text-white">
-            Handyman List
+            Technician List
         </h2>
 
         <a href="{{ route('provider.handymen.create') }}" class="btn-primary">
@@ -73,7 +73,7 @@
                     <th>Provider</th>
                     <th>Contact Number</th>
                     <th>Address</th>
-                    <th>Wallet Amount</th>
+                    <th>Commission Amount</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -92,7 +92,7 @@
                             <div class="flex items-center gap-3">
                                 <img src="{{ $handyman->profile_image ? asset('storage/'.$handyman->profile_image) : asset('images/default-user.png') }}"
                                      class="w-12 h-12 rounded-full object-cover"
-                                     alt="Handyman">
+                                     alt="Technician">
 
                                 <div>
                                     <p class="font-semibold text-gray-900 dark:text-white">
@@ -135,9 +135,21 @@
                         </td>
 
                         <td>
-                            <strong>
-                                ${{ number_format($handyman->wallet_amount ?? 0, 2) }}
-                            </strong>
+                            @if($handyman->commission_type && $handyman->commission !== null)
+                                <strong>
+                                    @if($handyman->commission_type === 'percentage')
+                                        {{ number_format($handyman->commission, 2) }}%
+                                    @else
+                                        ₹{{ number_format($handyman->commission, 2) }}
+                                    @endif
+                                </strong>
+                        
+                                <p class="text-xs text-gray-500 capitalize">
+                                    {{ $handyman->commission_type }}
+                                </p>
+                            @else
+                                <span class="text-gray-400">-</span>
+                            @endif
                         </td>
 
                         <td>
@@ -149,7 +161,7 @@
 
                                 <form method="POST"
                                       action="{{ route('provider.handymen.destroy', $handyman->id) }}"
-                                      onsubmit="return confirm('Delete this handyman?')">
+                                      onsubmit="return confirm('Delete this Technician?')">
                                     @csrf
                                     @method('DELETE')
 
@@ -163,7 +175,7 @@
                 @empty
                     <tr>
                         <td colspan="8" class="text-center py-10 text-gray-400">
-                            No handymen found
+                            No Technician found
                         </td>
                     </tr>
                 @endforelse

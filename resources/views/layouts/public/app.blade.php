@@ -62,10 +62,8 @@
 <div class="bg-primary-600 text-white text-sm py-1.5 text-center">
     <i class="fas fa-phone-alt mr-2"></i>
     Call us: <a href="tel:{{ $topBarPhone }}" class="font-semibold hover:underline">{{ $topBarPhone }}</a>
-    <span class="mx-4 opacity-50">|</span>
-    <select onchange="changeLang(this.value)" class="bg-transparent text-white text-sm border-none cursor-pointer outline-none">
-        <option>EN</option><option>HI</option><option>AR</option>
-    </select>
+   
+   
 </div>
 @endif
 
@@ -102,11 +100,11 @@
 
             {{-- Right side --}}
             <div class="flex items-center gap-3">
-                {{-- Dark/light toggle --}}
+                {{-- Dark/light toggle 
                 <button onclick="toggleDark()" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" title="Toggle theme">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
-                </button>
+                </button> --}}
 
                 @auth
                     {{-- Notification bell --}}

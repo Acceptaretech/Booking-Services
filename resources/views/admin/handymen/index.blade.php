@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
-@section('page_title','Handyman List')
+@section('page_title','Technician List')
 
 @section('content')
 
 <div class="card p-5 mb-6 flex justify-between items-center">
     <h2 class="text-lg font-bold text-gray-900 dark:text-white">
-        Handyman List
+        Technician List
     </h2>
 
     <a href="{{ route('admin.handymen.create') }}"
@@ -119,7 +119,18 @@
                         </td>
 
                         <td class="p-4">
-                            -
+                            @if($handyman->provider)
+                                <div>
+                                    <p class="font-semibold">
+                                        {{ $handyman->provider->first_name }} {{ $handyman->provider->last_name }}
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        {{ $handyman->provider->email }}
+                                    </p>
+                                </div>
+                            @else
+                                <span class="text-gray-400">No Provider</span>
+                            @endif
                         </td>
 
                         <td class="p-4">

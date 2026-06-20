@@ -108,7 +108,16 @@ class Service extends Model
     {
         return $this->hasMany(Review::class);
     }
+  
+    public function getAverageRatingAttribute()
+    {
+        return round($this->reviews()->avg('rating') ?? 0, 1);
+    }
 
+    public function getTotalReviewsAttribute()
+    {
+        return $this->reviews()->count();
+    }
     /*
     |--------------------------------------------------------------------------
     | Scopes

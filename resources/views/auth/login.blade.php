@@ -97,16 +97,35 @@
     <div class="flex items-center justify-center p-5">
         <div class="w-full max-w-md glass rounded-3xl p-8 shadow-2xl">
 
-            <div class="text-center mb-7">
-                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <i class="fas fa-lock text-white text-2xl"></i>
-                </div>
+            @php
+            $loginType = request()->is('admin/login') ? 'Admin' :
+                        (request()->is('provider/login') ? 'Provider' :
+                        (request()->is('technician/login') ? 'Technician' : 'Customer'));
+        @endphp
 
-                <h2 class="text-3xl font-bold">Sign In</h2>
-                <p class="text-slate-300 text-sm mt-2">
-                    Login to continue to your dashboard
-                </p>
+        <div class="text-center mb-7">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+
+                @if($loginType == 'Admin')
+                    <i class="fas fa-user-shield text-white text-2xl"></i>
+                @elseif($loginType == 'Provider')
+                    <i class="fas fa-user-tie text-white text-2xl"></i>
+                @elseif($loginType == 'Technician')
+                    <i class="fas fa-hard-hat text-white text-2xl"></i>
+                @else
+                    <i class="fas fa-user text-white text-2xl"></i>
+                @endif
+
             </div>
+
+            <h2 class="text-3xl font-bold">
+                {{ $loginType }} Login
+            </h2>
+
+            <p class="text-slate-300 text-sm mt-2">
+                Login to continue to your dashboard
+            </p>
+</div>
 
             @if($errors->any())
                 <div class="bg-red-500/15 border border-red-400/40 text-red-200 px-4 py-3 rounded-xl mb-4 text-sm">
@@ -124,7 +143,15 @@
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-
+                @if(request()->is('admin/login'))
+                    <input type="hidden" name="login_role" value="admin">
+                @elseif(request()->is('provider/login'))
+                    <input type="hidden" name="login_role" value="provider">
+                @elseif(request()->is('technician/login'))
+                    <input type="hidden" name="login_role" value="handyman">
+                @else
+                    <input type="hidden" name="login_role" value="customer">
+                @endif
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-slate-200 mb-2">
                         Email Address
@@ -178,7 +205,7 @@
                     </a>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2 mb-5">
+             {{--   <div class="grid grid-cols-2 gap-2 mb-5">
                     <button type="button" onclick="fillDemo('customer@demo.com','password')" class="demo-btn">
                         <i class="fas fa-user"></i> Customer
                     </button>
@@ -194,6 +221,47 @@
                     <button type="button" onclick="fillDemo('handyman@demo.com','password')" class="demo-btn">
                         <i class="fas fa-hard-hat"></i> Handyman
                     </button>
+                </div> --}}  
+                <div class="mb-5">
+
+                    @if(request()->is('admin/login'))
+                
+                        <button type="button"
+                                onclick="fillDemo('admin@demo.com','password')"
+                                class="demo-btn">
+                            <i class="fas fa-user-shield"></i>
+                            Admin Login
+                        </button>
+                
+                    @elseif(request()->is('provider/login'))
+                
+                        <button type="button"
+                                onclick="fillDemo('provider@demo.com','password')"
+                                class="demo-btn">
+                            <i class="fas fa-user-tie"></i>
+                            Provider Login
+                        </button>
+                
+                    @elseif(request()->is('technician/login'))
+                
+                        <button type="button"
+                                onclick="fillDemo('handyman@demo.com','password')"
+                                class="demo-btn">
+                            <i class="fas fa-hard-hat"></i>
+                            Technician Login
+                        </button>
+                
+                    @else
+                
+                        <button type="button"
+                                onclick="fillDemo('customer@demo.com','password')"
+                                class="demo-btn">
+                            <i class="fas fa-user"></i>
+                            Customer Login
+                        </button>
+                
+                    @endif
+                
                 </div>
 
                 <button
@@ -203,16 +271,20 @@
                     Login
                 </button>
 
+                @if(request()->is('login'))
+
                 <p class="text-center text-slate-300 text-sm mt-5">
                     Don’t have an account?
                     <a href="{{ route('register') }}" class="text-primary-300 font-semibold hover:underline">
                         Sign Up
                     </a>
                 </p>
+                
+                @endif
 
                 <p class="text-center mt-2">
                     <a href="{{ route('provider.register') }}" class="text-slate-400 text-xs hover:text-primary-300">
-                        Register as Provider or Handyman
+                        Register as Provider or Technician
                     </a>
                 </p>
             </form>
@@ -224,6 +296,7 @@
 
 <style>
     .demo-btn {
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;

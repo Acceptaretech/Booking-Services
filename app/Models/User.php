@@ -14,7 +14,8 @@ class User extends Authenticatable
 
     protected $fillable = [
         'username','first_name','last_name','email','phone','country_code',
-        'password','role','designation','profile_image','address',
+        'password','role','provider_id','category_id','commission_type',
+        'commission','designation','profile_image','address',
         'country','state','city','zone_id','wallet_amount','status',
         'is_verified','otp','otp_expires_at',
     ];
@@ -74,11 +75,24 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class, 'handyman_id');
     }
 
-    // Provider's handymen
+    // // Provider's handymen
+    // public function handymen()
+    // {
+    //     return $this->hasMany(User::class, 'zone_id', 'zone_id')
+    //                 ->where('role', 'handyman');
+    // }
+
+    // Provider → Handymen
     public function handymen()
     {
-        return $this->hasMany(User::class, 'zone_id', 'zone_id')
+        return $this->hasMany(User::class, 'provider_id')
                     ->where('role', 'handyman');
+    }
+
+    // Handyman → Provider
+    public function provider()
+    {
+        return $this->belongsTo(User::class, 'provider_id');
     }
 
     public function reviews()
@@ -135,5 +149,9 @@ class User extends Authenticatable
     public function providerHandymen()
     {
         return $this->hasMany(\App\Models\Handyman::class, 'provider_id');
+    }
+    public function commission()
+    {
+        return $this->belongsTo(\App\Models\HandymanCommission::class, 'commission_id');
     }
 }

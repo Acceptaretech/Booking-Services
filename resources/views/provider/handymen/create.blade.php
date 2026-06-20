@@ -1,13 +1,13 @@
 @extends('layouts.provider.app')
 
-@section('title','Add New Handyman')
-@section('page_title','Add New Handyman')
+@section('title','Add New Technician')
+@section('page_title','Add New Technician')
 
 @section('content')
 
 <div class="card p-5 mb-6">
     <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold">Add New Handyman</h2>
+        <h2 class="text-lg font-bold">Add New Technician</h2>
 
         <a href="{{ route('provider.handymen.index') }}" class="btn-primary">
             <i class="fas fa-angle-double-left mr-1"></i> Back
@@ -48,28 +48,38 @@
             </div>
 
             <div>
-              <label class="form-label">
-                  Select Handyman Commission <span class="text-red-500">*</span>
-              </label>
-          
-              <select name="commission_id" class="form-select" required>
-                  <option value="">Select Handyman Commission</option>
-          
-                  @foreach($commissions ?? [] as $commission)
-                      <option value="{{ $commission->id }}"
-                          {{ old('commission_id') == $commission->id ? 'selected' : '' }}>
-          
-                          {{ $commission->name ?? $commission->title }}
-                          @if(($commission->type ?? '') == 'percentage')
-                              ({{ $commission->commission }}%)
-                          @else
-                              (${{ number_format($commission->commission ?? $commission->amount ?? 0, 2) }})
-                          @endif
-          
-                      </option>
-                  @endforeach
-              </select>
-          </div>
+                <label class="form-label">
+                    Commission Type <span class="text-red-500">*</span>
+                </label>
+            
+                <select name="commission_type" id="commission_type" class="form-select" required>
+                    <option value="">Select Type</option>
+                    <option value="fixed">Fixed</option>
+                    <option value="percentage">Percentage</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="form-label">
+                    Commission Value <span class="text-red-500">*</span>
+                </label>
+            
+                <div class="relative">
+                    <input type="number"
+                           step="0.01"
+                           min="0"
+                           name="commission"
+                           id="commission"
+                           class="form-input"
+                           placeholder="Enter Commission"
+                           required>
+            
+                    <span id="commission_symbol"
+                          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        ₹
+                    </span>
+                </div>
+            </div>
 
             <div>
                 <label class="form-label">Contact Number <span class="text-red-500">*</span></label>
@@ -126,3 +136,18 @@
 </form>
 
 @endsection
+@push('scripts')
+<script>
+document.getElementById('commission_type').addEventListener('change', function () {
+
+    let symbol = document.getElementById('commission_symbol');
+
+    if (this.value === 'percentage') {
+        symbol.innerHTML = '%';
+    } else {
+        symbol.innerHTML = '₹';
+    }
+
+});
+</script>
+@endpush

@@ -1,44 +1,23 @@
 <?php
 
-use App\Http\Controllers\Admin\AddonController as AdminAddon;
-use App\Http\Controllers\Admin\BannerController as AdminBanner;
-// Public
-
-use App\Http\Controllers\Admin\BlogController as AdminBlog;
-use App\Http\Controllers\Admin\BookingController as AdminBooking;
-// Customer
-use App\Http\Controllers\Admin\CategoryController as AdminCategory;
-use App\Http\Controllers\Admin\CouponController as AdminCoupon;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
-use App\Http\Controllers\Admin\DocumentController;
-use App\Http\Controllers\Admin\HandymanCommissionController;
-// Provider
-use App\Http\Controllers\Admin\HandymanController;
-use App\Http\Controllers\Admin\HandymanRequestController;
-use App\Http\Controllers\Admin\HelpDeskController as AdminHelpDesk;
-use App\Http\Controllers\Admin\JobController as AdminJob;
-use App\Http\Controllers\Admin\PackageController as AdminPackage;
-use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\PaymentController as AdminPayment;
-use App\Http\Controllers\Admin\ProviderCommissionController;
-use App\Http\Controllers\Admin\ProviderEarningController;
-use App\Http\Controllers\Admin\RatingController as AdminRating;
-use App\Http\Controllers\Admin\ReportController as AdminReport;
-use App\Http\Controllers\Admin\ServiceController as AdminService;
-use App\Http\Controllers\Admin\SettingsController as AdminSettings;
-use App\Http\Controllers\Admin\ShopController as AdminShop;
-use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategory;
-// Admin
-use App\Http\Controllers\Admin\TaxController as AdminTax;
-use App\Http\Controllers\Admin\UserController as AdminUser;
-use App\Http\Controllers\Admin\WithdrawalController;
-use App\Http\Controllers\Admin\ZoneController as AdminZone;
 use App\Http\Controllers\Auth\AuthController;
+
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+// Public
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\PageController as PublicPage;
+// Customer
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\BookingController as CustomerBooking;
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboard;
 use App\Http\Controllers\Customer\ProfileController as CustomerProfile;
 use App\Http\Controllers\Customer\WalletController;
+use App\Http\Controllers\Customer\ReviewController as CustomerReview;
+
+// Provider
+
 use App\Http\Controllers\Provider\AddonController as ProviderAddon;
 use App\Http\Controllers\Provider\BookingController as ProviderBooking;
 use App\Http\Controllers\Provider\DashboardController as ProviderDashboard;
@@ -54,14 +33,53 @@ use App\Http\Controllers\Provider\RatingController as ProviderRating;
 use App\Http\Controllers\Provider\ServiceController as ProviderService;
 use App\Http\Controllers\Provider\ShopController as ProviderShop;
 use App\Http\Controllers\Provider\WithdrawalController as ProviderWithdrawal;
-use App\Http\Controllers\Public\HomeController;
-use App\Http\Controllers\Public\PageController as PublicPage;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+
+// Handyman
+use App\Http\Controllers\Handyman\DashboardController as HandymanDashboard;
+use App\Http\Controllers\Handyman\BookingController as HandymanBooking;
+use App\Http\Controllers\Handyman\PaymentController as HandymanPayment;
+use App\Http\Controllers\Handyman\ProfileController as HandymanProfile;
+use App\Http\Controllers\Handyman\HelpDeskController as HandymanHelpDesk;
+
+// Admin
+use App\Http\Controllers\Admin\HandymanController;
+use App\Http\Controllers\Admin\HandymanRequestController;
+use App\Http\Controllers\Admin\HelpDeskController as AdminHelpDesk;
+use App\Http\Controllers\Admin\JobController as AdminJob;
+use App\Http\Controllers\Admin\PackageController as AdminPackage;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PaymentController as AdminPayment;
+use App\Http\Controllers\Admin\ProviderCommissionController;
+use App\Http\Controllers\Admin\ProviderEarningController;
+use App\Http\Controllers\Admin\RatingController as AdminRating;
+use App\Http\Controllers\Admin\ReportController as AdminReport;
+use App\Http\Controllers\Admin\ServiceController as AdminService;
+use App\Http\Controllers\Admin\SettingsController as AdminSettings;
+use App\Http\Controllers\Admin\ShopController as AdminShop;
+use App\Http\Controllers\Admin\SubCategoryController as AdminSubCategory;
+use App\Http\Controllers\Admin\TaxController as AdminTax;
+use App\Http\Controllers\Admin\UserController as AdminUser;
+use App\Http\Controllers\Admin\WithdrawalController;
+use App\Http\Controllers\Admin\ZoneController as AdminZone;
+use App\Http\Controllers\Admin\CategoryController as AdminCategory;
+use App\Http\Controllers\Admin\CouponController as AdminCoupon;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\DocumentController;
+use App\Http\Controllers\Admin\HandymanCommissionController;
+use App\Http\Controllers\Admin\BlogController as AdminBlog;
+use App\Http\Controllers\Admin\BookingController as AdminBooking;
+use App\Http\Controllers\Admin\AddonController as AdminAddon;
+use App\Http\Controllers\Admin\BannerController as AdminBanner;
+
 
 // use App\Http\Controllers\Admin\WalletController;
 
 // PUBLIC
+
+Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
+Route::get('/provider/login', [AuthController::class, 'showLogin'])->name('provider.login');
+Route::get('/technician/login', [AuthController::class, 'showLogin'])->name('technician.login');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/categories', [HomeController::class, 'categories'])->name('categories');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
@@ -71,31 +89,12 @@ Route::get('/providers/{user}', [HomeController::class, 'providerDetail'])->name
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/blogs/{blog}', [HomeController::class, 'blogDetail'])->name('blog.detail');
 // User read pages
-Route::get('about-us', [PublicPage::class, 'show'])
-    ->defaults('slug', 'about-us')
-    ->name('pages.about');
-
-Route::get('terms-and-conditions', [PublicPage::class, 'show'])
-    ->defaults('slug', 'terms-and-conditions')
-    ->name('pages.terms');
-
-Route::get('privacy-policy', [PublicPage::class, 'show'])
-    ->defaults('slug', 'privacy-policy')
-    ->name('pages.privacy');
-
-Route::get('help-and-support', [PublicPage::class, 'show'])
-    ->defaults('slug', 'help-and-support')
-    ->name('pages.help');
-
-Route::get('refund-and-cancellation-policy', [PublicPage::class, 'show'])
-    ->defaults('slug', 'refund-and-cancellation-policy')
-    ->name('pages.refund');
-
+Route::get('about-us', [PublicPage::class, 'show'])->defaults('slug', 'about-us')->name('pages.about');
+Route::get('terms-and-conditions', [PublicPage::class, 'show'])->defaults('slug', 'terms-and-conditions')->name('pages.terms');
+Route::get('privacy-policy', [PublicPage::class, 'show'])->defaults('slug', 'privacy-policy')->name('pages.privacy');
+Route::get('help-and-support', [PublicPage::class, 'show'])->defaults('slug', 'help-and-support')->name('pages.help');
+Route::get('refund-and-cancellation-policy', [PublicPage::class, 'show'])->defaults('slug', 'refund-and-cancellation-policy')->name('pages.refund');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-// Route::view('/terms', 'public.terms')->name('terms');
-// Route::view('/privacy', 'public.privacy')->name('privacy');
-// Route::view('/help', 'public.help')->name('help');
-// Route::view('/refund', 'public.refund')->name('refund');
 
 // AUTH
 Route::middleware('guest')->group(function () {
@@ -105,10 +104,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/register/provider', [AuthController::class, 'showProviderRegister'])->name('provider.register');
     Route::post('/register/provider', [AuthController::class, 'providerRegister']);
+    Route::get('/providers-by-zone/{zone}', [AuthController::class, 'providersByZone'])->name('providers.by.zone');
     Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.email');
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
 Route::post('/settings/theme', function (Request $r) {
     session(['theme' => $r->theme]);
 
@@ -133,7 +134,35 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
     Route::post('/addresses/{address}/default', [AddressController::class, 'makeDefault'])->name('addresses.default');
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
-    Route::post('/wallet/add-balance', [WalletController::class, 'addBalance'])->name('wallet.add-balance');
+    Route::post('/wallet/create-order', [WalletController::class, 'createRazorpayOrder'])->name('wallet.create-order');
+    Route::post('/wallet/payment-success', [WalletController::class, 'paymentSuccess'])->name('wallet.payment-success');
+  
+    Route::get('/reviews', [CustomerReview::class, 'index'])->name('reviews');
+    Route::get('/reviews/{review}', [CustomerReview::class, 'show'])->name('reviews.show');
+    Route::delete('/reviews/{review}', [CustomerReview::class, 'destroy'])->name('reviews.destroy');
+});
+
+
+// Handyman 
+Route::middleware(['auth', 'role:handyman'])->prefix('handyman')->name('handyman.')->group(function () {
+
+    Route::get('/dashboard', [HandymanDashboard::class, 'index'])->name('dashboard');
+
+    Route::get('/bookings', [HandymanBooking::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{booking}', [HandymanBooking::class, 'show'])->name('bookings.show');
+    Route::patch('/bookings/{booking}/status', [HandymanBooking::class, 'updateStatus'])->name('bookings.status');
+
+    Route::get('/payments', [HandymanPayment::class, 'index'])->name('payments.index');
+    Route::get('/cash-payments', [HandymanPayment::class, 'cash'])->name('payments.cash');
+
+    Route::get('/profile', [HandymanProfile::class, 'index'])->name('profile');
+    Route::post('/profile/update', [HandymanProfile::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [HandymanProfile::class, 'updatePassword'])->name('profile.password');
+
+    Route::get('/help-desk', [HandymanHelpDesk::class, 'index'])->name('help-desk.index');
+    Route::get('/help-desk/create', [HandymanHelpDesk::class, 'create'])->name('help-desk.create');
+    Route::post('/help-desk', [HandymanHelpDesk::class, 'store'])->name('help-desk.store');
+    Route::get('/help-desk/{helpDesk}', [HandymanHelpDesk::class, 'show'])->name('help-desk.show');
 });
 
 // PROVIDER
@@ -162,14 +191,9 @@ Route::middleware(['auth', 'role:provider'])->prefix('provider')->name('provider
     Route::get('/service-request-list', [ProviderService::class, 'requestList'])->name('services.requests');
 
     // ADD THESE TWO ROUTES
-    Route::post('/services/bulk-action', [ProviderService::class, 'bulkAction'])
-        ->name('services.bulk-action');
-
-    Route::get('/services/{service}', [ProviderService::class, 'show'])
-        ->name('services.show');
-    Route::get('/get-subcategories/{category}', [ProviderService::class, 'getSubCategories'])
-        ->name('services.get-subcategories');
-
+    Route::post('/services/bulk-action', [ProviderService::class, 'bulkAction'])->name('services.bulk-action');
+    Route::get('/services/{service}', [ProviderService::class, 'show'])->name('services.show');
+    Route::get('/get-subcategories/{category}', [ProviderService::class, 'getSubCategories'])->name('services.get-subcategories');
     Route::get('/shops', [ProviderShop::class, 'index'])->name('shops.index');
     Route::get('/shops/create', [ProviderShop::class, 'create'])->name('shops.create');
     Route::post('/shops', [ProviderShop::class, 'store'])->name('shops.store');
@@ -199,6 +223,8 @@ Route::middleware(['auth', 'role:provider'])->prefix('provider')->name('provider
     Route::post('/addons/bulk-action', [ProviderAddon::class, 'bulkAction'])->name('addons.bulk-action');
 
     Route::get('/job-requests', [ProviderJobRequest::class, 'index'])->name('job-requests.index');
+    Route::post('/job-requests/{booking}/assign-technician', [ProviderJobRequest::class, 'assignTechnician'])->name('job-requests.assign-technician');
+    Route::post('/job-requests/auto-assign',[ProviderJobRequest::class, 'autoAssign'])->name('job-requests.auto-assign');
     Route::get('/job-requests/{jobRequest}', [ProviderJobRequest::class, 'show'])->name('job-requests.show');
     Route::delete('/job-requests/{jobRequest}', [ProviderJobRequest::class, 'destroy'])->name('job-requests.destroy');
     Route::post('/job-requests/bulk-action', [ProviderJobRequest::class, 'bulkAction'])->name('job-requests.bulk-action');
@@ -241,6 +267,9 @@ Route::middleware(['auth', 'role:provider'])->prefix('provider')->name('provider
 
     Route::get('/profile', [ProviderProfile::class, 'index'])->name('profile');
     Route::post('/profile', [ProviderProfile::class, 'update'])->name('profile.update');
+    Route::get('/profile/change-password', [ProviderProfile::class, 'changePassword'])->name('profile.change-password');
+    Route::post('/profile/password', [ProviderProfile::class, 'updatePassword'])->name('profile.password');
+    
     Route::get('/my-info', [ProviderProfile::class, 'info'])->name('profile.info');
     Route::get('/billing', [ProviderProfile::class, 'billing'])->name('profile.billing');
     Route::get('/settings', [ProviderProfile::class, 'settings'])->name('profile.settings');
@@ -348,20 +377,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Route::get('/handymen', [AdminUser::class, 'handymen'])->name('handymen.index');
 
     // Handymen
-    Route::get('/handymen', [HandymanController::class, 'index'])
-        ->name('handymen.index');
-
-    Route::get('/handymen/create', [HandymanController::class, 'create'])
-        ->name('handymen.create');
-
-    Route::post('/handymen/store', [HandymanController::class, 'store'])
-        ->name('handymen.store');
-
-    Route::get('/handymen/{user}/edit', [HandymanController::class, 'edit'])
-        ->name('handymen.edit');
-
-    Route::put('/handymen/{user}', [HandymanController::class, 'update'])
-        ->name('handymen.update');
+    Route::get('/handymen', [HandymanController::class, 'index'])->name('handymen.index');
+    Route::get('/handymen/create', [HandymanController::class, 'create'])->name('handymen.create');
+    Route::post('/handymen/store', [HandymanController::class, 'store'])->name('handymen.store');
+    Route::get('/handymen/{user}/edit', [HandymanController::class, 'edit'])->name('handymen.edit');
+    Route::put('/handymen/{user}', [HandymanController::class, 'update'])->name('handymen.update');
 
     Route::delete('/handymen/{user}', [HandymanController::class, 'destroy'])
         ->name('handymen.destroy');
